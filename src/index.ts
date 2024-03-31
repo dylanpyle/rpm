@@ -35,7 +35,7 @@ const downloadButtons = document.querySelectorAll(
 ) as NodeListOf<HTMLButtonElement>;
 
 const image = new Image();
-image.src = "/sample.jpg";
+image.src = "sample.jpg";
 
 const options: Options = {
   paddingPercent: parseInt(paddingInput.value),
