@@ -1,24 +1,25 @@
-import { CANVAS_SIZE } from "./config";
-
 export function rotateContext(
   context: CanvasRenderingContext2D,
+  canvas: HTMLCanvasElement,
   angle: number,
 ) {
-  context.translate(CANVAS_SIZE / 2, CANVAS_SIZE / 2);
+  context.translate(canvas.width / 2, canvas.height / 2);
   context.rotate(angle);
-  context.translate(-CANVAS_SIZE / 2, -CANVAS_SIZE / 2);
+  context.translate(-canvas.width / 2, -canvas.height / 2);
 }
 
 export function fillBackground(
   context: CanvasRenderingContext2D,
+  canvas: HTMLCanvasElement,
   backgroundColorValue: string,
 ) {
   context.fillStyle = backgroundColorValue;
-  context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+  context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 export function drawImage(
   context: CanvasRenderingContext2D,
+  canvas: HTMLCanvasElement,
   image: HTMLImageElement | HTMLCanvasElement,
   padding: number,
 ) {
@@ -26,9 +27,9 @@ export function drawImage(
   context.beginPath();
 
   context.arc(
-    CANVAS_SIZE / 2,
-    CANVAS_SIZE / 2,
-    CANVAS_SIZE / 2 - padding,
+    canvas.width / 2,
+    canvas.height / 2,
+    canvas.width / 2 - padding,
     0,
     Math.PI * 2,
   );
@@ -39,8 +40,8 @@ export function drawImage(
     image,
     padding,
     padding,
-    CANVAS_SIZE - padding * 2,
-    CANVAS_SIZE - padding * 2,
+    canvas.width - padding * 2,
+    canvas.height - padding * 2,
   );
 
   context.restore();
@@ -49,14 +50,15 @@ export function drawImage(
 // Assumes center hole is 0.25in on a 4in label (standard)
 export function drawCenterHole(
   context: CanvasRenderingContext2D,
+  canvas: HTMLCanvasElement,
   padding: number,
   backgroundColorValue: string,
 ) {
-  const labelSize = CANVAS_SIZE - (padding * 2);
+  const labelSize = canvas.width - (padding * 2);
   const radius = labelSize / 32;
 
   context.beginPath();
-  context.arc(CANVAS_SIZE / 2, CANVAS_SIZE / 2, radius, 0, Math.PI * 2);
+  context.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
   context.fillStyle = backgroundColorValue;
   context.fill();
 }

@@ -1,6 +1,14 @@
+@font-face {
+  font-family: 'Haskoy';
+  src: url('/haskoy[wght].woff2') format('woff2');
+  font-style: normal;
+  font-display: swap;
+}
+
 html, body {
   margin: 0;
   padding: 0;
+  cursor: default;
 }
 
 html,
@@ -9,7 +17,9 @@ input,
 textarea,
 button,
 h1, h2, h3, h4, h5, h6 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: Haskoy, sans;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 * {
@@ -23,8 +33,6 @@ h1, h2, h3, h4, h5, h6, label, p, .preview-canvas {
 
 body {
   padding: 20px 40px;
-  font-size: 16px;
-  line-height: 1.5;
   background: #f0f8ff;
   display: flex;
   flex-direction: column;
@@ -38,7 +46,11 @@ main {
   width: 100%;
   max-width: 500px;
   margin: 20px;
-  padding: 20px;
+  padding: 30px;
+}
+
+h1 {
+  font-style: italic;
 }
 
 .preview-canvas {

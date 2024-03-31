@@ -1,4 +1,3 @@
-import { CANVAS_SIZE } from "./config";
 import {
   drawCenterHole,
   drawImage,
@@ -22,6 +21,7 @@ export interface Options {
 export default class Spinner {
   private options: Options;
   private ctx: CanvasRenderingContext2D;
+  public canvas: HTMLCanvasElement;
 
   private croppedImageBuffer: HTMLCanvasElement;
   private croppedImageCtx: CanvasRenderingContext2D;
@@ -29,10 +29,9 @@ export default class Spinner {
   private isRunning: boolean = false;
 
   constructor(canvas: HTMLCanvasElement, options: Options) {
-    canvas.width = CANVAS_SIZE;
-    canvas.height = CANVAS_SIZE;
+    this.canvas = canvas;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
     if (!ctx) {
       throw new Error("Error getting context");
@@ -54,29 +53,31 @@ export default class Spinner {
     this.options.image.addEventListener("load", this.onImageLoad);
   }
 
-  private render = () => {
-    const { options, ctx, isRunning } = this;
-    const { image } = options;
+  public renderFrame(rotationAngle: number) {
+    const { options, ctx, canvas } = this;
+
+    ctx.resetTransform();
+
+    fillBackground(ctx, canvas, options.backgroundColor);
+    rotateContext(ctx, canvas, rotationAngle);
+    drawImage(ctx, canvas, this.croppedImageBuffer, this.getPaddingPx());
+
+    if (options.showCenterHole) {
+      drawCenterHole(ctx, canvas, this.getPaddingPx(), options.backgroundColor);
+    }
+  }
+
+  private renderLoop = () => {
+    const { isRunning } = this;
 
     if (!isRunning) {
       return;
     }
 
-    if (!image.complete) {
-      return requestAnimationFrame(this.render);
-    }
+    const rotationAngle = this.getRotationAngle();
+    this.renderFrame(rotationAngle);
 
-    ctx.resetTransform();
-
-    fillBackground(ctx, options.backgroundColor);
-    rotateContext(ctx, this.getRotationAngle());
-    drawImage(ctx, this.croppedImageBuffer, this.getPaddingPx());
-
-    if (options.showCenterHole) {
-      drawCenterHole(ctx, this.getPaddingPx(), options.backgroundColor);
-    }
-
-    requestAnimationFrame(this.render);
+    requestAnimationFrame(this.renderLoop);
   };
 
   private getPaddingPx() {
@@ -101,17 +102,17 @@ export default class Spinner {
 
     const aspectRatio = image.width / image.height;
 
-    let drawWidth = CANVAS_SIZE;
-    let drawHeight = CANVAS_SIZE;
+    let drawWidth = this.canvas.width;
+    let drawHeight = this.canvas.height;
 
     if (aspectRatio > 1) {
-      drawWidth = CANVAS_SIZE * aspectRatio;
+      drawWidth = this.canvas.width * aspectRatio;
     } else {
-      drawHeight = CANVAS_SIZE / aspectRatio;
+      drawHeight = this.canvas.height / aspectRatio;
     }
 
-    const xOffset = (CANVAS_SIZE - drawWidth) / 2;
-    const yOffset = (CANVAS_SIZE - drawHeight) / 2;
+    const xOffset = (this.canvas.width - drawWidth) / 2;
+    const yOffset = (this.canvas.height - drawHeight) / 2;
 
     this.croppedImageCtx.drawImage(
       image,
@@ -124,10 +125,15 @@ export default class Spinner {
 
   public start() {
     this.isRunning = true;
-    this.render();
+    this.renderLoop();
   }
 
   public stop() {
     this.isRunning = false;
+  }
+
+  public getImageData(): Uint8ClampedArray {
+    return this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height)
+      .data;
   }
 }

@@ -22,10 +22,9 @@ cmd:dev() {
   npx esbuild src/index.ts \
     --bundle \
     --outfile=static/bundle.js \
-    --loader:.svg=file \
-    --loader:.woff2=file \
     --watch=forever \
     --servedir=static \
+    --platform=node \
     --serve-fallback=static/index.html \
     --serve=8080
 
@@ -41,9 +40,8 @@ cmd:build() {
   npx esbuild src/index.ts \
     --bundle \
     --minify \
+    --platform=node \
     --outfile=dist/bundle.js \
-    --loader:.svg=file \
-    --loader:.woff2=file
 
   set -o noglob
 }
