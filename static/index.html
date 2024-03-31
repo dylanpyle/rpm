@@ -23,6 +23,11 @@
       </label>
 
       <label>
+        <div class='label-text'>Audio</div>
+        <input type='file' class='audio-input' accept='audio/*' />
+      </label>
+
+      <label>
         <div class='label-text'>Speed (rpm)</div>
         <input
           type='number'
@@ -76,8 +81,13 @@
         />
       </label>
 
-      <button class='download-button' data-fps='30' data-size='500' data-kbps='500'>Download (low-quality)</button>
-      <button class='download-button' data-fps='60' data-size='1024' data-kbps='1000'>Download (high-quality)</button>
+      <button
+        class='download-button'
+        data-fps='60'
+        data-size='1024'
+       >
+         Download (mp4)
+      </button>
     </main>
 
     <script src="bundle.js"></script>

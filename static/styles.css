@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Haskoy';
-  src: url('/haskoy[wght].woff2') format('woff2');
+  src: url('haskoy[wght].woff2') format('woff2');
   font-style: normal;
   font-display: swap;
 }
@@ -32,7 +32,6 @@ h1, h2, h3, h4, h5, h6, label, p, .preview-canvas {
 }
 
 body {
-  padding: 20px 40px;
   background: #f0f8ff;
   display: flex;
   flex-direction: column;
@@ -47,6 +46,14 @@ main {
   max-width: 500px;
   margin: 20px;
   padding: 30px;
+  overflow: hidden;
+}
+
+@media all and (max-width: 500px) {
+  main {
+    margin: 0;
+    border-radius: 0;
+  }
 }
 
 h1 {
@@ -64,12 +71,14 @@ label {
   align-items: center;
 }
 
-label input {
-  margin: 0;
+label input[type=number] {
+  display: block;
+  flex-grow: 1;
 }
 
 .label-text {
   font-weight: bold;
   flex-basis: 50%;
   flex-shrink: 0;
+  margin-right: 20px;
 }

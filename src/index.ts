@@ -17,6 +17,7 @@ const backgroundInput = document.querySelector(
 ) as HTMLInputElement;
 
 const imageInput = document.querySelector(".image-input") as HTMLInputElement;
+const audioInput = document.querySelector(".audio-input") as HTMLInputElement;
 
 const paddingInput = document.querySelector(
   ".padding-input",
@@ -44,6 +45,13 @@ const options: Options = {
   showCenterHole: showCenterHoleInput.checked,
   image,
 };
+
+let numberOfRotations = parseInt(rotationsInput.value);
+
+const audioFile = new File([""], "sample.mp3", { type: "audio/mp3" });
+let audio: File | null = audioFile;
+
+console.log({ audio });
 
 backgroundInput.addEventListener(
   "input",
@@ -73,11 +81,19 @@ imageInput.addEventListener("input", () => {
   reader.readAsDataURL(file);
 });
 
+audioInput.addEventListener("input", () => {
+  const file = audioInput.files?.[0];
+
+  if (!file) {
+    return;
+  }
+
+  audio = file;
+});
+
 paddingInput.addEventListener("input", () => {
   options.paddingPercent = parseInt(paddingInput.value);
 });
-
-let numberOfRotations = parseInt(rotationsInput.value);
 
 rotationsInput.addEventListener("input", () => {
   numberOfRotations = parseInt(rotationsInput.value);
@@ -120,6 +136,7 @@ async function onDownloadButtonClick(event: MouseEvent) {
     spinner,
     numberOfRotations,
     fps,
+    audio,
   });
 
   const a = document.createElement("a");
