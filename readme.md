@@ -7,7 +7,9 @@ Instant, free, no subscriptions, no signups.
 
 [Try it out!](https://dylanpyle.github.io/rpm/)
 
-*Note: live demo is the latest stable version; audio support is in development.*
+## Example output
+
+https://gist.github.com/assets/806257/07436267-e052-4607-b8c5-8d64f228a06b
 
 ## Local development
 

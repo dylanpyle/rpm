@@ -27,10 +27,6 @@ const showCenterHoleInput = document.querySelector(
   ".show-hole-input",
 ) as HTMLInputElement;
 
-const rotationsInput = document.querySelector(
-  ".rotations-input",
-) as HTMLInputElement;
-
 const downloadButtons = document.querySelectorAll(
   ".download-button",
 ) as NodeListOf<HTMLButtonElement>;
@@ -46,12 +42,7 @@ const options: Options = {
   image,
 };
 
-let numberOfRotations = parseInt(rotationsInput.value);
-
-const audioFile = new File([""], "sample.mp3", { type: "audio/mp3" });
-let audio: File | null = audioFile;
-
-console.log({ audio });
+let audio: ArrayBuffer | null = null;
 
 backgroundInput.addEventListener(
   "input",
@@ -81,22 +72,28 @@ imageInput.addEventListener("input", () => {
   reader.readAsDataURL(file);
 });
 
-audioInput.addEventListener("input", () => {
+audioInput.addEventListener("input", async () => {
   const file = audioInput.files?.[0];
 
   if (!file) {
     return;
   }
 
-  audio = file;
+  const audioReader = new FileReader();
+
+  const unencodedData = await new Promise<ArrayBuffer>((resolve) => {
+    audioReader.onload = () => {
+      resolve(audioReader.result as ArrayBuffer);
+    };
+
+    audioReader.readAsArrayBuffer(file);
+  });
+
+  audio = unencodedData;
 });
 
 paddingInput.addEventListener("input", () => {
   options.paddingPercent = parseInt(paddingInput.value);
-});
-
-rotationsInput.addEventListener("input", () => {
-  numberOfRotations = parseInt(rotationsInput.value);
 });
 
 showCenterHoleInput.addEventListener("input", () => {
@@ -134,7 +131,6 @@ async function onDownloadButtonClick(event: MouseEvent) {
   const url = await record({
     speedRpm: options.speedRpm,
     spinner,
-    numberOfRotations,
     fps,
     audio,
   });
