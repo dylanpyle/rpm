@@ -108,7 +108,7 @@ async function onDownloadButtonClick(event: MouseEvent) {
     return;
   }
 
-  let originalLabel = event.target.textContent;
+  const originalLabel = event.target.textContent;
 
   const { dataset } = event.target;
 
