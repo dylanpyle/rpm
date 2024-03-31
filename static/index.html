@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Spinner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Spinner</h1>
+
+      <p>Generate a spinning video of record label artwork. Great for music
+      videos, social media, & etc.</p>
+
+      <p>Instant, free, no subscriptions, no signups.</p>
+
+      <label>
+        <div class='label-text'>Image</div>
+        <input type='file' class='image-input' accept='image/*' />
+      </label>
+
+      <label>
+        <div class='label-text'>Record speed (rpm)</div>
+        <input
+          type='number'
+          class='speed-input'
+          value='10'
+          min='0'
+          max='1000'
+        />
+      </label>
+
+      <label>
+        <div class='label-text'>Background color</div>
+        <input
+          type='color'
+          class='background-color-input'
+          value='#000000'
+        />
+      </label>
+
+      <label>
+        <div class='label-text'>Padding (percent)</div>
+        <input
+          type='number'
+          class='padding-input'
+          value='10'
+          min='0'
+          max='100'
+        />
+      </label>
+
+      <label>
+        <div class='label-text'>Show center hole?</div>
+        <input
+          type='checkbox'
+          class='show-hole-input'
+          checked
+        />
+      </label>
+
+      <canvas class='preview-canvas'></canvas>
+
+      <button class='download-button'>Download</button>
+    </main>
+
+    <script src="bundle.js"></script>
+  </body>
+</html>

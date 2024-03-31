@@ -1,0 +1,11 @@
+{
+  "name": "spinner",
+  "version": "0.0.1",
+  "description": "A tool to create simple spinning animation videos",
+  "keywords": [],
+  "author": "Dylan Pyle <me@dylanpyle.com>",
+  "license": "MIT",
+  "dependencies": {
+    "esbuild": "0.20.2"
+  }
+}
