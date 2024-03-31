@@ -46,6 +46,19 @@ cmd:build() {
   set -o noglob
 }
 
+cmd:publish() {
+  git checkout production
+  git merge main
+  cmd:build
+  ls | grep -v dist | xargs rm -rf
+  mv dist/* .
+  rm -rf dist
+  git add .
+  git commit -m "Publish"
+  git push
+  git checkout main
+}
+
 (
   cd $(dirname "$0")
   "cmd:$@"
