@@ -32,10 +32,11 @@ cmd:dev() {
 }
 
 cmd:build() {
-  set +o noglob
   mkdir -p dist
 
+  set +o noglob
   cp -r static/* dist
+  set -o noglob
 
   npx esbuild src/index.ts \
     --bundle \
@@ -43,12 +44,9 @@ cmd:build() {
     --platform=node \
     --outfile=dist/bundle.js \
 
-  set -o noglob
 }
 
 cmd:publish() {
-  set +o noglob
-
   git branch -D production || true
   git checkout -b production main
 
@@ -56,7 +54,11 @@ cmd:publish() {
   cmd:build
 
   ls | grep -v dist | xargs rm -rf
+  
+  set +o noglob
   mv dist/* .
+  set -o noglob
+
   rm -rf dist
 
   git add .
@@ -64,8 +66,6 @@ cmd:publish() {
   git push -f
 
   git checkout main
-
-  set -o noglob
 }
 
 (
