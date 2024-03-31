@@ -25,22 +25,6 @@ const downloadButton = document.querySelector(".download-button") as HTMLButtonE
 
 /** Globals **/
 
-const CANVAS_SIZE = 1024;
-
-interface Options {
-  speedRpm: number;
-  backgroundColor: string;
-  padding: number;
-  showCenterHole: boolean;
-}
-
-const options: Options = {
-  speedRpm: parseInt(speedInput.value),
-  backgroundColor: backgroundInput.value,
-  padding: parseInt(paddingInput.value),
-  showCenterHole: showCenterHoleInput.checked,
-};
-
 previewCanvas.width = CANVAS_SIZE;
 previewCanvas.height = CANVAS_SIZE;
 
@@ -233,8 +217,6 @@ image.addEventListener("load", () => {
   } else {
     drawHeight = CANVAS_SIZE / aspectRatio;
   }
-
-  console.log(drawWidth, drawHeight);
 
   const xOffset = (CANVAS_SIZE - drawWidth) / 2;
   const yOffset = (CANVAS_SIZE - drawHeight) / 2;
