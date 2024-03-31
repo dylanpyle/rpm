@@ -47,16 +47,25 @@ cmd:build() {
 }
 
 cmd:publish() {
-  git checkout production
-  git merge main
+  set +o noglob
+
+  git branch -D production || true
+  git checkout -b production main
+
+  npm install
   cmd:build
+
   ls | grep -v dist | xargs rm -rf
   mv dist/* .
   rm -rf dist
+
   git add .
   git commit -m "Publish"
-  git push
+  git push -f
+
   git checkout main
+
+  set -o noglob
 }
 
 (
