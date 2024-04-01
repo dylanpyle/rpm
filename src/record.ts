@@ -36,7 +36,7 @@ export default async function record(options: Options): Promise<string> {
     fastStart: "in-memory",
   });
 
-  const defaultLengthSeconds = 60 / speedRpm;
+  const defaultLengthSeconds = (60 / speedRpm) * 3;
 
   let lengthSeconds = defaultLengthSeconds;
 
@@ -50,11 +50,9 @@ export default async function record(options: Options): Promise<string> {
       },
     });
 
-    const audioSampleRate = 44100;
-
     audioEncoder.configure({
       codec: "mp4a.40.2",
-      sampleRate: audioSampleRate,
+      sampleRate: AUDIO_SAMPLE_RATE,
       numberOfChannels: 1,
       bitrate: AUDIO_BITRATE,
     });
