@@ -82,3 +82,13 @@ label input[type=number] {
   flex-shrink: 0;
   margin-right: 20px;
 }
+
+.mobile-only {
+  display: none;
+}
+
+@media all and (max-width: 500px) {
+  .mobile-only {
+    display: block;
+  }
+}
