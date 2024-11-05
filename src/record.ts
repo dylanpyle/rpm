@@ -58,7 +58,9 @@ export default async function record(options: Options): Promise<string> {
       bitrate: AUDIO_BITRATE,
     });
 
-    const audioContext = new AudioContext();
+    const audioContext = new AudioContext({
+      sampleRate: AUDIO_SAMPLE_RATE,
+    });
 
     const audioBuffer = await audioContext.decodeAudioData(options.audio);
     lengthSeconds = audioBuffer.duration;
