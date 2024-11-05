@@ -46,6 +46,7 @@ export default async function record(options: Options): Promise<string> {
         muxer.addAudioChunk(chunk, meta);
       },
       error: (err: Error) => {
+        alert(err);
         console.error(err);
       },
     });
@@ -80,6 +81,7 @@ export default async function record(options: Options): Promise<string> {
       muxer.addVideoChunk(chunk, meta);
     },
     error: (err: Error) => {
+      alert(err);
       console.error(err);
     },
   });
